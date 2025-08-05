@@ -5,15 +5,27 @@
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
     h1 { color: #333; }
-    button { padding: 10px 20px; margin: 10px 10px 0 0; }
+    button {
+      padding: 10px 20px;
+      margin: 10px 10px 0 0;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .upload-btn { background-color: #3498db; color: white; }
+    .start-btn { background-color: #2ecc71; color: white; }
+    .end-btn { background-color: #f39c12; color: white; }
+    .reset-btn { background-color: #e74c3c; color: white; }
     .question-item { margin: 5px 0; font-size: 14px; }
   </style>
 </head>
 <body>
   <h1>📋 Admin Panel - Live Quiz</h1>
 
-  <button onclick="uploadQuestions()">📤 Upload All Questions</button>
-  <button onclick="startQuiz()">🚀 Start Quiz</button>
+  <button class="upload-btn" onclick="uploadQuestions()">📤 Upload Questions</button>
+  <button class="start-btn" onclick="startQuiz()">🚀 Start Quiz</button>
+  <button class="end-btn" onclick="endQuiz()">⏹️ End Quiz</button>
+  <button class="reset-btn" onclick="resetQuiz()">🧹 Reset Quiz</button>
 
   <h3>Uploaded Questions:</h3>
   <div id="questionsList"></div>
@@ -22,7 +34,12 @@
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      remove
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD3HN5SCXq0dQ94wP73PHTJdwjNVAJOJm8",
@@ -60,9 +77,6 @@
       { question: "Which sense organ helps us see?", options: { A: "Nose", B: "Skin", C: "Eyes", D: "Ears" }, correct: "C" }
     ];
 
-    let currentIndex = -1;
-    let intervalId = null;
-
     window.uploadQuestions = () => {
       set(ref(db, "quiz/questions"), questions);
       document.getElementById("questionsList").innerHTML = questions
@@ -72,23 +86,30 @@
     };
 
     window.startQuiz = () => {
-      currentIndex = 0;
-      document.getElementById("status").innerText = "Quiz started. Questions are going live every 10 seconds.";
-
       set(ref(db, "quiz/started"), true);
-      set(ref(db, "quiz/currentIndex"), currentIndex);
+      set(ref(db, "quiz/ended"), false);
+      document.getElementById("status").innerText = "✅ Quiz has started. Users can now take the quiz.";
+    };
 
-      // Push one question every 10 seconds
-      intervalId = setInterval(() => {
-        currentIndex++;
-        if (currentIndex >= questions.length) {
-          clearInterval(intervalId);
-          set(ref(db, "quiz/ended"), true);
-          document.getElementById("status").innerText = "Quiz ended after 200 seconds.";
-        } else {
-          set(ref(db, "quiz/currentIndex"), currentIndex);
-        }
-      }, 10000); // every 10 seconds
+    window.endQuiz = () => {
+      set(ref(db, "quiz/ended"), true);
+      document.getElementById("status").innerText = "⏹️ Quiz has ended. Users can no longer submit.";
+      alert("Quiz ended manually.");
+    };
+
+    window.resetQuiz = () => {
+      const pathsToClear = [
+        "scores",
+        "answers",
+        "quiz/started",
+        "quiz/ended"
+      ];
+      pathsToClear.forEach(path => {
+        remove(ref(db, path));
+      });
+
+      document.getElementById("status").innerText = "🧹 Quiz reset. Ready for new session.";
+      alert("✅ All quiz data cleared.");
     };
   </script>
 </body>
