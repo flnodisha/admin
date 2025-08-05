@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html type="module">
+<head>
+  <title>Admin Panel - Live Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
+    h1 { color: #333; }
+    button { padding: 10px 20px; margin: 10px 10px 0 0; }
+    .question-item { margin: 5px 0; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>📋 Admin Panel - Live Quiz</h1>
+
+  <button onclick="uploadQuestions()">📤 Upload All Questions</button>
+  <button onclick="startQuiz()">🚀 Start Quiz</button>
+
+  <h3>Uploaded Questions:</h3>
+  <div id="questionsList"></div>
+  <p id="status"></p>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD3HN5SCXq0dQ94wP73PHTJdwjNVAJOJm8",
+      authDomain: "livequizapp-5e433.firebaseapp.com",
+      databaseURL: "https://livequizapp-5e433-default-rtdb.firebaseio.com",
+      projectId: "livequizapp-5e433",
+      storageBucket: "livequizapp-5e433.firebasestorage.app",
+      messagingSenderId: "393541118458",
+      appId: "1:393541118458:web:76620000b8f08e87561c43"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const questions = [
+      { question: "What is the capital of India?", options: { A: "Delhi", B: "Mumbai", C: "Kolkata", D: "Chennai" }, correct: "A" },
+      { question: "Who wrote the Ramayana?", options: { A: "Vyasa", B: "Valmiki", C: "Tulsidas", D: "Kalidasa" }, correct: "B" },
+      { question: "Which planet is known as the Red Planet?", options: { A: "Venus", B: "Mars", C: "Jupiter", D: "Saturn" }, correct: "B" },
+      { question: "What is the national animal of India?", options: { A: "Lion", B: "Tiger", C: "Elephant", D: "Leopard" }, correct: "B" },
+      { question: "Which gas do plants absorb?", options: { A: "Oxygen", B: "Nitrogen", C: "Carbon Dioxide", D: "Hydrogen" }, correct: "C" },
+      { question: "Who was the first Prime Minister of India?", options: { A: "Mahatma Gandhi", B: "Sardar Patel", C: "Lal Bahadur Shastri", D: "Jawaharlal Nehru" }, correct: "D" },
+      { question: "What is H2O commonly known as?", options: { A: "Hydrogen", B: "Salt", C: "Water", D: "Oxygen" }, correct: "C" },
+      { question: "Which animal gives us wool?", options: { A: "Cow", B: "Goat", C: "Sheep", D: "Horse" }, correct: "C" },
+      { question: "How many days are there in a leap year?", options: { A: "365", B: "366", C: "364", D: "367" }, correct: "B" },
+      { question: "Which is the largest continent?", options: { A: "Africa", B: "Asia", C: "Europe", D: "Australia" }, correct: "B" },
+      { question: "What is the boiling point of water?", options: { A: "0°C", B: "100°C", C: "50°C", D: "200°C" }, correct: "B" },
+      { question: "Who invented the light bulb?", options: { A: "Edison", B: "Newton", C: "Einstein", D: "Tesla" }, correct: "A" },
+      { question: "Which ocean is the biggest?", options: { A: "Indian", B: "Pacific", C: "Atlantic", D: "Arctic" }, correct: "B" },
+      { question: "What color is chlorophyll?", options: { A: "Red", B: "Green", C: "Blue", D: "Yellow" }, correct: "B" },
+      { question: "Which organ pumps blood?", options: { A: "Liver", B: "Brain", C: "Heart", D: "Lungs" }, correct: "C" },
+      { question: "Who discovered gravity?", options: { A: "Einstein", B: "Edison", C: "Newton", D: "Curie" }, correct: "C" },
+      { question: "Which is the smallest planet?", options: { A: "Mercury", B: "Mars", C: "Pluto", D: "Earth" }, correct: "A" },
+      { question: "Which festival is known as the festival of lights?", options: { A: "Holi", B: "Diwali", C: "Eid", D: "Christmas" }, correct: "B" },
+      { question: "What is the currency of India?", options: { A: "Dollar", B: "Euro", C: "Rupee", D: "Yen" }, correct: "C" },
+      { question: "Which sense organ helps us see?", options: { A: "Nose", B: "Skin", C: "Eyes", D: "Ears" }, correct: "C" }
+    ];
+
+    let currentIndex = -1;
+    let intervalId = null;
+
+    window.uploadQuestions = () => {
+      set(ref(db, "quiz/questions"), questions);
+      document.getElementById("questionsList").innerHTML = questions
+        .map((q, i) => `<div class="question-item"><strong>Q${i + 1}:</strong> ${q.question}</div>`)
+        .join('');
+      alert("✅ Questions uploaded to Firebase");
+    };
+
+    window.startQuiz = () => {
+      currentIndex = 0;
+      document.getElementById("status").innerText = "Quiz started. Questions are going live every 10 seconds.";
+
+      set(ref(db, "quiz/started"), true);
+      set(ref(db, "quiz/currentIndex"), currentIndex);
+
+      // Push one question every 10 seconds
+      intervalId = setInterval(() => {
+        currentIndex++;
+        if (currentIndex >= questions.length) {
+          clearInterval(intervalId);
+          set(ref(db, "quiz/ended"), true);
+          document.getElementById("status").innerText = "Quiz ended after 200 seconds.";
+        } else {
+          set(ref(db, "quiz/currentIndex"), currentIndex);
+        }
+      }, 10000); // every 10 seconds
+    };
+  </script>
+</body>
+</html>
