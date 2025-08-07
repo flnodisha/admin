@@ -55,27 +55,208 @@
     const db = getDatabase(app);
 
     const questions = [
-      { question: "What is the capital of India?", options: { A: "Delhi", B: "Mumbai", C: "Kolkata", D: "Chennai" }, correct: "A" },
-      { question: "Who wrote the Ramayana?", options: { A: "Vyasa", B: "Valmiki", C: "Tulsidas", D: "Kalidasa" }, correct: "B" },
-      { question: "Which planet is known as the Red Planet?", options: { A: "Venus", B: "Mars", C: "Jupiter", D: "Saturn" }, correct: "B" },
-      { question: "What is the national animal of India?", options: { A: "Lion", B: "Tiger", C: "Elephant", D: "Leopard" }, correct: "B" },
-      { question: "Which gas do plants absorb?", options: { A: "Oxygen", B: "Nitrogen", C: "Carbon Dioxide", D: "Hydrogen" }, correct: "C" },
-      { question: "Who was the first Prime Minister of India?", options: { A: "Mahatma Gandhi", B: "Sardar Patel", C: "Lal Bahadur Shastri", D: "Jawaharlal Nehru" }, correct: "D" },
-      { question: "What is H2O commonly known as?", options: { A: "Hydrogen", B: "Salt", C: "Water", D: "Oxygen" }, correct: "C" },
-      { question: "Which animal gives us wool?", options: { A: "Cow", B: "Goat", C: "Sheep", D: "Horse" }, correct: "C" },
-      { question: "How many days are there in a leap year?", options: { A: "365", B: "366", C: "364", D: "367" }, correct: "B" },
-      { question: "Which is the largest continent?", options: { A: "Africa", B: "Asia", C: "Europe", D: "Australia" }, correct: "B" },
-      { question: "What is the boiling point of water?", options: { A: "0°C", B: "100°C", C: "50°C", D: "200°C" }, correct: "B" },
-      { question: "Who invented the light bulb?", options: { A: "Edison", B: "Newton", C: "Einstein", D: "Tesla" }, correct: "A" },
-      { question: "Which ocean is the biggest?", options: { A: "Indian", B: "Pacific", C: "Atlantic", D: "Arctic" }, correct: "B" },
-      { question: "What color is chlorophyll?", options: { A: "Red", B: "Green", C: "Blue", D: "Yellow" }, correct: "B" },
-      { question: "Which organ pumps blood?", options: { A: "Liver", B: "Brain", C: "Heart", D: "Lungs" }, correct: "C" },
-      { question: "Who discovered gravity?", options: { A: "Einstein", B: "Edison", C: "Newton", D: "Curie" }, correct: "C" },
-      { question: "Which is the smallest planet?", options: { A: "Mercury", B: "Mars", C: "Pluto", D: "Earth" }, correct: "A" },
-      { question: "Which festival is known as the festival of lights?", options: { A: "Holi", B: "Diwali", C: "Eid", D: "Christmas" }, correct: "B" },
-      { question: "What is the currency of India?", options: { A: "Dollar", B: "Euro", C: "Rupee", D: "Yen" }, correct: "C" },
-      { question: "Which sense organ helps us see?", options: { A: "Nose", B: "Skin", C: "Eyes", D: "Ears" }, correct: "C" }
-    ];
+  {
+    question: "R.B.I ର ଗଭର୍ନର କିଏ?",
+    options: {
+      A: "ଶକ୍ତିକାନ୍ତ ଦାସ",
+      B: "ଅମିତ ଶାହ",
+      C: "ଅରୁଣ ଜେଟ୍ଲୀ",
+      D: "ନରେନ୍ଦ୍ର ମୋଦି"
+    },
+    correct: "A"
+  },
+  {
+    question: "ରାମାୟଣ କିଏ ଲେଖିଥିଲେ?",
+    options: {
+      A: "ବ୍ୟାସଦେବ",
+      B: "ବାଲ୍ମୀକି",
+      C: "ତୁଳସୀଦାସ",
+      D: "କାଳିଦାସ"
+    },
+    correct: "B"
+  },
+  {
+    question: "କେଉଁ ଗ୍ରହକୁ \"ଲାଲ ଗ୍ରହ\" ବୋଲି ଜଣାଯାଏ?",
+    options: {
+      A: "ଶୁକ୍ର",
+      B: "ମଙ୍ଗଳ",
+      C: "ବୃହସ୍ପତି",
+      D: "ଶନି"
+    },
+    correct: "B"
+  },
+  {
+    question: "କେଉଁ ଦେଶରେ ସୁନାର ମୂଲ୍ୟ ସବୁଠାରୁ କମ?",
+    options: {
+      A: "ଭାରତ",
+      B: "ଦୁବାଇ",
+      C: "ଚୀନ",
+      D: "ଅମେରିକା"
+    },
+    correct: "B"
+  },
+  {
+    question: "କେଉଁ ଜୀବଟି ଠିଆ ହୋଇ ଶୋଇଥାଏ?",
+    options: {
+      A: "ଘୋଡ଼ା",
+      B: "ବାଘ",
+      C: "କୁକୁର",
+      D: "ହାତୀ"
+    },
+    correct: "A"
+  },
+  {
+    question: "ଭାରତର ପ୍ରଥମ ପ୍ରଧାନମନ୍ତ୍ରୀ କିଏ ଥିଲେ?",
+    options: {
+      A: "ମହାତ୍ମା ଗାନ୍ଧୀ",
+      B: "ସରଦାର ପଟେଲ",
+      C: "ଲାଲ ବହାଦୁର ଶାସ୍ତ୍ରୀ",
+      D: "ଜବାହରଲାଲ ନେହେରୁ"
+    },
+    correct: "D"
+  },
+  {
+    question: "H₂O କୁ ସାଧାରଣତଃ କଣ ବୋଲାଯାଏ?",
+    options: {
+      A: "ହାଇଡ୍ରୋଜେନ",
+      B: "ଲୁଣ",
+      C: "ପାଣି",
+      D: "ଅକ୍ସିଜେନ"
+    },
+    correct: "C"
+  },
+  {
+    question: "କାହାକୁ ଭାରତର Metro Man କୁହାଯାଏ?",
+    options: {
+      A: "ଧୀରୁଭାଇ ଆମ୍ବାନୀ",
+      B: "ଈ.ଶ୍ରୀଧରନ୍",
+      C: "ନିତିନ ଗଡକରି",
+      D: "ଅନିଲ କପୂର"
+    },
+    correct: "B"
+  },
+  {
+    question: "ଗୋଟଏ Leap ବର୍ଷରେ କେତେ ଦିନ ଥାଏ?",
+    options: {
+      A: "365",
+      B: "366",
+      C: "364",
+      D: "367"
+    },
+    correct: "B"
+  },
+  {
+    question: "ବିଶ୍ୱର ସବୁଠୁ ବଡ଼ ମହାଦେଶ କେଉଁଟି?",
+    options: {
+      A: "ଆଫ୍ରିକା",
+      B: "ଏସିଆ",
+      C: "ୟୁରୋପ୍",
+      D: "ଅଷ୍ଟ୍ରେଲିଆ"
+    },
+    correct: "B"
+  },
+  {
+    question: "ପାଣିର ବାଷ୍ପିକରଣ ତାପମାତ୍ରା କେତେ?",
+    options: {
+      A: "0°C",
+      B: "100°C",
+      C: "50°C",
+      D: "200°C"
+    },
+    correct: "B"
+  },
+  {
+    question: "ବିଦ୍ୟୁତ ଆଲୋକ ବତୀ କିଏ ଆବିଷ୍କାର କରିଥିଲେ?",
+    options: {
+      A: "ଏଡିସନ୍",
+      B: "ନ୍ୟୁଟନ୍",
+      C: "ଆଇନଷ୍ଟାଇନ୍",
+      D: "ଟେସ୍ଲା"
+    },
+    correct: "A"
+  },
+  {
+    question: "ବିଶ୍ୱର ସବୁଠୁ ବଡ଼ ସାଗର କେଉଁଟି?",
+    options: {
+      A: "ଭାରତ ମହାସାଗର",
+      B: "ପ୍ୟାସିଫିକ୍",
+      C: "ଆଟଲାଣ୍ଟିକ୍",
+      D: "ଆର୍କଟିକ୍"
+    },
+    correct: "B"
+  },
+  {
+    question: "କ୍ଲୋରୋଫିଲ୍‌ର ରଙ୍ଗ କଣ?",
+    options: {
+      A: "ଲାଲ",
+      B: "ସବୁଜ",
+      C: "ନୀଳ",
+      D: "ହଳଦିଆ"
+    },
+    correct: "B"
+  },
+  {
+    question: "କେଉଁ ଅଙ୍ଗଟି ରକ୍ତ ସଂଚାଳନରେ ପ୍ରମୁଖ ଭୂମିକା ଗ୍ରହଣ କରେ?",
+    options: {
+      A: "ଯକୃତ",
+      B: "ମସ୍ତିଷ୍କ",
+      C: "ହୃଦୟ",
+      D: "ଫୁସଫୁସ"
+    },
+    correct: "C"
+  },
+  {
+    question: "ଗୁରୁତ୍ୱାକର୍ଷଣ କିଏ ଆବିଷ୍କାର କରିଥିଲେ?",
+    options: {
+      A: "ଆଇନଷ୍ଟାଇନ୍",
+      B: "ଏଡିସନ୍",
+      C: "ନ୍ୟୁଟନ୍",
+      D: "ମାଡାମ କ୍ୟୁରୀ"
+    },
+    correct: "C"
+  },
+  {
+    question: "ସବୁଠୁ ଛୋଟ ଗ୍ରହ କେଉଁଟି?",
+    options: {
+      A: "ବୁଧ",
+      B: "ମଙ୍ଗଳ",
+      C: "ପ୍ଲୁଟୋ",
+      D: "ପୃଥିବୀ"
+    },
+    correct: "A"
+  },
+  {
+    question: "\"ଆଲୋକର ପର୍ବ\" ବୋଲି କେଉଁ ପର୍ବକୁ କୁହାଯାଏ?",
+    options: {
+      A: "ହୋଳି",
+      B: "ଦିପାବଳି",
+      C: "ଇଦ୍",
+      D: "ବଡ଼ଦିନ"
+    },
+    correct: "B"
+  },
+  {
+    question: "ଭାରତର ମୁଦ୍ରା କଣ?",
+    options: {
+      A: "ଡଲାର",
+      B: "ୟୁରୋ",
+      C: "ଟଙ୍କା (ରୁପି)",
+      D: "ୟେନ୍"
+    },
+    correct: "C"
+  },
+  {
+    question: "ଦୃଷ୍ଟି ପାଇଁ କେଉଁ ଇନ୍ଦ୍ରିୟ ସହାୟକ ହୁଏ?",
+    options: {
+      A: "ନାକ",
+      B: "ତ୍ୱଚା",
+      C: "ଚକ୍ଷୁ (ଆଖି)",
+      D: "କାନ"
+    },
+    correct: "C"
+  }
+];
+
 
     window.uploadQuestions = () => {
       set(ref(db, "quiz/questions"), questions);
