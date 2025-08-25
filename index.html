@@ -31,9 +31,269 @@
   <div id="questionsList"></div>
   <p id="status"></p>
 
-  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      remove
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD3HN5SCXq0dQ94wP73PHTJdwjNVAJOJm8",
+      authDomain: "livequizapp-5e433.firebaseapp.com",
+      databaseURL: "https://livequizapp-5e433-default-rtdb.firebaseio.com",
+      projectId: "livequizapp-5e433",
+      storageBucket: "livequizapp-5e433.firebasestorage.app",
+      messagingSenderId: "393541118458",
+      appId: "1:393541118458:web:76620000b8f08e87561c43"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const questions = [
+      {
+        question: "Which amendment to the Indian Constitution is often called the 'Mini-Constitution'?",
+        options: {
+          A: "44th Amendment",
+          B: "24th Amendment",
+          C: "42nd Amendment",
+          D: "73rd Amendment"
+        },
+        correct: "C"
+      },
+      {
+        question: "The Treaty of Tordesillas (1494) divided newly discovered lands outside Europe between which two empires?",
+        options: {
+          A: "Britain and France",
+          B: "Portugal and Spain",
+          C: "Netherlands and Britain",
+          D: "Spain and France"
+        },
+        correct: "B"
+      },
+      {
+        question: "What is the theoretical boundary around a black hole beyond which no light can escape?",
+        options: {
+          A: "Singularity",
+          B: "Accretion Disk",
+          C: "Photon Sphere",
+          D: "Event Horizon"
+        },
+        correct: "D"
+      },
+      {
+        question: "The 'Laffer Curve' in economics illustrates a theoretical relationship between tax rates and what?",
+        options: {
+          A: "Government spending",
+          B: "Inflation rate",
+          C: "Tax revenue collected",
+          D: "Gross Domestic Product (GDP)"
+        },
+        correct: "C"
+      },
+      {
+        question: "Who wrote the influential philosophical work 'Critique of Pure Reason'?",
+        options: {
+          A: "Friedrich Nietzsche",
+          B: "Immanuel Kant",
+          C: "Jean-Paul Sartre",
+          D: "René Descartes"
+        },
+        correct: "B"
+      },
+      {
+        question: "The Konark Sun Temple in Odisha is designed in the shape of a colossal chariot for which Hindu deity?",
+        options: {
+          A: "Shiva",
+          B: "Vishnu",
+          C: "Surya",
+          D: "Brahma"
+        },
+        correct: "C"
+      },
+      {
+        question: "In cell biology, what is the primary function of the Golgi apparatus?",
+        options: {
+          A: "Energy production",
+          B: "Synthesizing lipids",
+          C: "Modifying, sorting, and packaging proteins",
+          D: "Storing genetic material"
+        },
+        correct: "C"
+      },
+      {
+        question: "Who presided over the 1929 Lahore session of the Indian National Congress where the 'Purna Swaraj' resolution was passed?",
+        options: {
+          A: "Sardar Patel",
+          B: "Motilal Nehru",
+          C: "Mahatma Gandhi",
+          D: "Jawaharlal Nehru"
+        },
+        correct: "D"
+      },
+      {
+        question: "The 'Ring of Fire' is a major area in the basin of which ocean, known for frequent earthquakes and volcanic eruptions?",
+        options: {
+          A: "Atlantic Ocean",
+          B: "Indian Ocean",
+          C: "Pacific Ocean",
+          D: "Arctic Ocean"
+        },
+        correct: "C"
+      },
+      {
+        question: "The Fields Medal is a prestigious international award given for outstanding discoveries in which field?",
+        options: {
+          A: "Physics",
+          B: "Chemistry",
+          C: "Literature",
+          D: "Mathematics"
+        },
+        correct: "D"
+      },
+      {
+        question: "What was the name of the first artificial satellite, launched by the Soviet Union in 1957?",
+        options: {
+          A: "Vostok 1",
+          B: "Explorer 1",
+          C: "Sputnik 1",
+          D: "Luna 1"
+        },
+        correct: "C"
+      },
+      {
+        question: "What is the term for a word that is spelled the same forwards and backwards, like 'level' or 'madam'?",
+        options: {
+          A: "Anagram",
+          B: "Palindrome",
+          C: "Antonym",
+          D: "Homonym"
+        },
+        correct: "B"
+      },
+      {
+        question: "Kalaripayattu, considered one of the oldest martial arts, originated from which Indian state?",
+        options: {
+          A: "Tamil Nadu",
+          B: "Karnataka",
+          C: "Kerala",
+          D: "Andhra Pradesh"
+        },
+        correct: "C"
+      },
+      {
+        question: "The art movement of 'Cubism' is most famously associated with which two artists?",
+        options: {
+          A: "Vincent van Gogh and Paul Gauguin",
+          B: "Claude Monet and Pierre-Auguste Renoir",
+          C: "Salvador Dalí and René Magritte",
+          D: "Pablo Picasso and Georges Braque"
+        },
+        correct: "D"
+      },
+      {
+        question: "In Greek mythology, who was the king of Crete who commissioned the Labyrinth to contain the Minotaur?",
+        options: {
+          A: "Theseus",
+          B: "Perseus",
+          C: "King Minos",
+          D: "Agamemnon"
+        },
+        correct: "C"
+      },
+      {
+        question: "Which strait separates the Iberian Peninsula from North Africa?",
+        options: {
+          A: "Strait of Hormuz",
+          B: "Strait of Malacca",
+          C: "Strait of Gibraltar",
+          D: "Bering Strait"
+        },
+        correct: "C"
+      },
+      {
+        question: "What is the process of splitting a heavy, unstable atomic nucleus into two lighter nuclei called?",
+        options: {
+          A: "Nuclear Fusion",
+          B: "Nuclear Fission",
+          C: "Beta Decay",
+          D: "Gamma Radiation"
+        },
+        correct: "B"
+      },
+      {
+        question: "In finance, what does the term 'Blue Chip Stock' typically refer to?",
+        options: {
+          A: "A high-risk technology startup",
+          B: "A government-issued bond",
+          C: "Stock in a well-established, financially sound company",
+          D: "A stock that costs less than one dollar"
+        },
+        correct: "C"
+      },
+      {
+        question: "Who is the author of the dystopian novel 'Brave New World'?",
+        options: {
+          A: "George Orwell",
+          B: "Aldous Huxley",
+          C: "Ray Bradbury",
+          D: "H.G. Wells"
+        },
+        correct: "B"
+      },
+      {
+        question: "What does the acronym SQL stand for in computer science?",
+        options: {
+          A: "Standard Query Language",
+          B: "Sequential Query Language",
+          C: "Structured Query Language",
+          D: "System Query Logic"
+        },
+        correct: "C"
+      }
+    ];
+
+
+    window.uploadQuestions = () => {
+      set(ref(db, "quiz/questions"), questions);
+      document.getElementById("questionsList").innerHTML = questions
+        .map((q, i) => `<div class="question-item"><strong>Q${i + 1}:</strong> ${q.question}</div>`)
+        .join('');
+      alert("✅ Questions uploaded to Firebase");
+    };
+
+    window.startQuiz = () => {
+      set(ref(db, "quiz/started"), true);
+      set(ref(db, "quiz/ended"), false);
+      document.getElementById("status").innerText = "✅ Quiz has started. Users can now take the quiz.";
+    };
+
+    window.endQuiz = () => {
+      set(ref(db, "quiz/ended"), true);
+      document.getElementById("status").innerText = "⏹️ Quiz has ended. Users can no longer submit.";
+      alert("Quiz ended manually.");
+    };
+
+    window.resetQuiz = () => {
+      const pathsToClear = [
+        "scores",
+        "answers",
+        "quiz/started",
+        "quiz/ended"
+      ];
+      pathsToClear.forEach(path => {
+        remove(ref(db, path));
+      });
+
+      document.getElementById("status").innerText = "🧹 Quiz reset. Ready for new session.";
+      alert("✅ All quiz data cleared.");
+    };
+  </script>
+</body>
+</html>
     import {
       getDatabase,
       ref,
